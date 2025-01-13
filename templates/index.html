@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head content remains the same -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Subtitle Toolkit</h1>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="form-section">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="video-extract">Extract Subtitles (Choose Video File):</label>
+                    <div class="file-input-container">
+                        <input type="file" name="video" id="video-extract" class="file-input" required>
+                        <div class="file-input-label">No file chosen</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Extract Subtitles</button>
+            </form>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-section">
+            <form action="/combine" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="video-combine">Combine Video and Subtitles (Choose Video File):</label>
+                    <div class="file-input-container">
+                        <input type="file" name="video" id="video-combine" class="file-input" required>
+                        <div class="file-input-label">No file chosen</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subtitle">Choose Subtitle File:</label>
+                    <div class="file-input-container">
+                        <input type="file" name="subtitle" id="subtitle" class="file-input" required>
+                        <div class="file-input-label">No file chosen</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Combine Video & Subtitles</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Update file input labels with selected filename
+        document.querySelectorAll('.file-input').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const fileName = e.target.files[0]?.name || 'No file chosen';
+                e.target.nextElementSibling.textContent = fileName;
+            });
+        });
+    </script>
+</body>
+</html>
